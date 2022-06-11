@@ -1,0 +1,39 @@
+name: CI Feature Branch
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+
+env:
+  BUILD: FEAT
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    env:
+      OTHER: ${{ format('SECRET_ID_{0}','hey') }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Some commands to test
+        id: version
+        run: |
+          echo $OTHER
+          echo "FOO=$OTHER" >> $GITHUB_ENV
+          echo ::set-output name=version::$OTHER
+      - name: Some other commands to test
+        run: |
+          echo $FOO
+          echo ${{steps.version.outputs.version}}
+          ls -a
+
+  otherTest:
+    name: otherTest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Other commands to test
+        run: |
+          echo ${{steps.version.outputs.version}}
+          ls -a
