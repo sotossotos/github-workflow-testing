@@ -36,9 +36,11 @@ jobs:
 
   otherTest:
     name: otherTest
+    environment: Feature
     runs-on: ubuntu-latest
     steps:
       - name: Other commands to test
         run: |
+          echo ${{secrets.SECRET_ID}}
           echo ${{steps.version.outputs.version}}
           ls -a
