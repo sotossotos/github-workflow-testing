@@ -3,8 +3,8 @@ name: Other
 on:
   workflow_call:
 
-    concurrency:
-      group: test
+concurrency:
+  group: test
 
 jobs:
 
