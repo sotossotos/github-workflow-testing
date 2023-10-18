@@ -44,3 +44,8 @@ jobs:
           echo ${{secrets.SECRET_ID}}
           echo ${{steps.version.outputs.version}}
           ls -a
+
+  someOther:
+    name: someOther
+    environment: Feature
+    uses: ./.github/workflows/other.yml

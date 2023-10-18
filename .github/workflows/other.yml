@@ -1,0 +1,25 @@
+name: Other
+
+on:
+  workflow_call:
+
+    concurrency:
+      group: test
+
+jobs:
+
+  job1:
+    name: Job-1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo 1
+        run: |
+          echo hey1
+  
+  job2:
+    name: Job-2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo 2
+        run: |
+          echo hey2
