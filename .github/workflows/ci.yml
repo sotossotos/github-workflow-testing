@@ -47,5 +47,4 @@ jobs:
 
   someOther:
     name: someOther
-    environment: Feature
     uses: ./.github/workflows/other.yml
