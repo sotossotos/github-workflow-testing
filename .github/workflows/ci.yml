@@ -45,7 +45,12 @@ jobs:
           echo ${{steps.version.outputs.version}}
           ls -a
 
+  someOtherOther:
+    name: someOtherOther
+    needs: otherTest
+    uses: ./.github/workflows/other.yml
+
   someOther:
     name: someOther
-    needs: otherTest
+    needs: someOtherOther
     uses: ./.github/workflows/other.yml
