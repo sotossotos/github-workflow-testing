@@ -1,0 +1,56 @@
+name: CI Feature Branch
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+
+env:
+  BUILD: FEAT
+  SECRET: ${{ secrets.SECRET_ID }}
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    environment: Feature
+    env:
+      OTHER: ${{ format('SECRET_ID_{0}','hey') }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Some commands to test
+        id: version
+        run: |
+          echo $OTHER
+          echo $SECRET
+          echo "FOO=$OTHER" >> $GITHUB_ENV
+          echo ::set-output name=version::$OTHER
+      - name: Some other commands to test
+        run: |
+          echo $FOO
+          echo 
+          echo ${{steps.version.outputs.version}}
+          ls -a
+
+  otherTest:
+    name: otherTest
+    environment: Feature
+    runs-on: ubuntu-latest
+    steps:
+      - name: Other commands to test
+        run: |
+          echo ${{secrets.SECRET_ID}}
+          echo ${{steps.version.outputs.version}}
+          ls -a
+
+  someOtherOther:
+    name: someOtherOther
+    needs: otherTest
+    uses: ./.github/workflows/other.yml
+
+  someOther:
+    name: someOther
+    needs: someOtherOther
+    uses: ./.github/workflows/other.yml
