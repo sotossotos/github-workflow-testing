@@ -47,4 +47,5 @@ jobs:
 
   someOther:
     name: someOther
+    needs: otherTest
     uses: ./.github/workflows/other.yml
